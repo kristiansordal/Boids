@@ -1,49 +1,40 @@
 #include "Entity.hpp"
 #define _USE_MATH_DEFINES
-#include <iostream>
-#include <math.h>
+#include <cmath>
 
-// Sets the triangle to an isosceles triangle starting at the pase point
 void Entity::spawn(Vector2f point, float angle) {
+    // Sets the triangle to an isosceles triangle starting at the pase point
+    triangle.setPointCount(3);
     triangle.setPoint(0, point);
-    triangle.setPoint(1, Vector2f(point.x - base_ / 2, point.y + height_));
-    triangle.setPoint(2, Vector2f(point.x + base_ / 2, point.y + height_));
-    triangle.setOrigin(Vector2f(point.x, point.y + height_ / 3));
+    triangle.setPoint(1, Vector2f(point.x - base_ / 2.f, point.y + height_));
+    triangle.setPoint(2, Vector2f(point.x + base_ / 2.f, point.y + height_));
+
+    // Sets the origin to the center of the base and rotates triangle
+    triangle.setOrigin(Vector2f(point.x, point.y + height_ / 3.f));
     triangle.setRotation(angle);
     triangle.setPosition(point);
-}
 
-void Entity::accelerate(Vector2f acceleration) {
-    auto magnitude = sqrt(velocity_.x * velocity_.x + velocity_.y * velocity_.y);
-
-    if (magnitude < max_velocity_) {
-        acceleration_ += acceleration;
-    }
+    // Initializes rotation and view line
+    view_line = VertexArray(Lines, 2);
+    compute_view_line();
+    compute_direction();
 }
-void Entity::set_velocity(Vector2f velocity) { prev_center_ = center_ - velocity; }
 
 void Entity::compute_view_line() {
-    // Get rotation and convert to radians
-    float rotation = triangle.getRotation() * M_PI / 180.f;
-
-    // Get the direction vector and rotate it 90 degrees
-    Vector2f dir(cos(rotation), sin(rotation));
-    dir = Vector2f(dir.y, -dir.x);
-    Vector2f pos = triangle.getPosition() + height_ / 3.f * dir;
-
-    // Update the view line of the boid
+    Vector2f pos = triangle.getPosition() + height_ / 3.f * direction_;
     view_line[0].position = pos;
-    view_line[1].position = pos + dir * 250.f;
+    view_line[1].position = pos + direction_ * 200.f;
 }
 
-// TODO: Add max velocity and acceleration
-void Entity::update(float dt) {
+void Entity::compute_direction() {
     float rotation = triangle.getRotation() * M_PI / 180.f;
-    Vector2f dir(cos(rotation), sin(rotation));
-    dir = Vector2f(dir.y, -dir.x);
-    velocity_ = dir * .001f * dt;
-    prev_center_ = center_;
-    center_ += velocity_;
-    triangle.move(center_);
+    direction_.y = -cos(rotation);
+    direction_.x = sin(rotation);
+}
+
+void Entity::update(float dt) {
+    compute_direction();
     compute_view_line();
+    velocity_ = direction_ * speed_;
+    triangle.move(velocity_ * dt);
 }

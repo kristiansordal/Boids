@@ -6,29 +6,24 @@ class Entity {
   private:
     float base_ = 10.f;
     float height_ = 15.f;
-    Vector2f center_;
+    float speed_ = 5.f;
+    float force_ = 3.f;
     Vector2f velocity_;
-    Vector2f acceleration_;
-    float max_velocity_ = 0.0000001f;
-    Vector2f prev_center_;
+    Vector2f direction_;
 
   public:
     ConvexShape triangle;
     VertexArray view_line;
     Entity(Vector2f point, float angle)
-        : velocity_(0, 0),
-          view_line(Lines, 2) {
-        triangle.setPointCount(3);
+        : velocity_(0, 0) {
         spawn(point, angle);
-        compute_view_line();
     }
 
     virtual ~Entity() = default;
 
     virtual void set_color(Color color);
     void spawn(Vector2f point, float angle);
-    void accelerate(Vector2f acceleration);
-    void set_velocity(Vector2f velocity);
     void compute_view_line();
+    void compute_direction();
     void update(float dt);
 };

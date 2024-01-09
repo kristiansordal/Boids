@@ -4,11 +4,13 @@
 using namespace std;
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Boids Simulation");
+    int width = 800;
+    int height = 600;
+    sf::RenderWindow window(sf::VideoMode(width, height), "Boids Simulation");
     sf::Clock dt_clock, fps;
     Solver solver;
-    for (int i = 0; i < 10; i++) {
-        solver.add_boid(Vector2f(400.f, 300.f), rand() % 360);
+    for (int i = 0; i < 100; i++) {
+        solver.add_boid(Vector2f((float)(rand() % width), (float)(rand() % height)), rand() % 360);
     }
 
     while (window.isOpen()) {
@@ -18,7 +20,6 @@ int main() {
                 window.close();
             }
         }
-
         window.clear(sf::Color::White);
         solver.update(window);
         window.display();

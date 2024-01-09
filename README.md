@@ -13,7 +13,7 @@ build/debug/boids
 ```
 
 ## TODO
-- Implement proper movement of singular boid
-- Implement cohesion, alignment and separation
-- Implement predators
+- ✅ Implement proper movement of multiple boids without rules
+- ❌ Implement cohesion, alignment and separation
+- ❌ Implement predators
 

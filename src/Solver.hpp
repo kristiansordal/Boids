@@ -1,12 +1,10 @@
+#pragma once
 #include "Boid.hpp"
 class Solver {
 
   private:
-    // Vector2f acceleration = Vector2f(.1f, .1f);
     std::vector<Boid> boids;
-
     void apply_constraint();
-    void apply_acceleration();
 
   public:
     Solver() = default;
