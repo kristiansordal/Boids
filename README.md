@@ -11,3 +11,9 @@ cmake -B build/debug
 cmake --build build/debug
 build/debug/boids
 ```
+
+## TODO
+- Implement proper movement of singular boid
+- Implement cohesion, alignment and separation
+- Implement predators
+
