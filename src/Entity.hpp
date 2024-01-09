@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 using namespace sf;
-// TODO: Center might be redundant and can be changed for triangle.getPosition()
 class Entity {
   private:
     float base_ = 10.f;
@@ -25,5 +24,6 @@ class Entity {
     void spawn(Vector2f point, float angle);
     void compute_view_line();
     void compute_direction();
+    void constrain();
     void update(float dt);
 };

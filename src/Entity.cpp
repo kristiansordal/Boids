@@ -32,6 +32,14 @@ void Entity::compute_direction() {
     direction_.x = sin(rotation);
 }
 
+void Entity::constrain() {
+    auto view_range = view_line[1].position;
+
+    if (view_range.x > 800 || view_range.x < 0 || view_range.y > 600 || view_range.y < 0) {
+        triangle.rotate(1.f);
+    }
+}
+
 void Entity::update(float dt) {
     compute_direction();
     compute_view_line();

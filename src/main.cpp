@@ -1,4 +1,4 @@
-#include "Solver.hpp"
+#include "Flock.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 using namespace std;
@@ -8,9 +8,10 @@ int main() {
     int height = 600;
     sf::RenderWindow window(sf::VideoMode(width, height), "Boids Simulation");
     sf::Clock dt_clock, fps;
-    Solver solver;
+
+    Flock flock;
     for (int i = 0; i < 100; i++) {
-        solver.add_boid(Vector2f((float)(rand() % width), (float)(rand() % height)), rand() % 360);
+        flock.add_boid(Vector2f((float)(rand() % width), (float)(rand() % height)), rand() % 360);
     }
 
     while (window.isOpen()) {
@@ -21,7 +22,7 @@ int main() {
             }
         }
         window.clear(sf::Color::White);
-        solver.update(window);
+        flock.update(window);
         window.display();
     }
 
