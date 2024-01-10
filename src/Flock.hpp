@@ -13,5 +13,5 @@ class Flock {
     void add_boid(Vector2f position, float angle);
     void draw(RenderWindow &window);
     void update(RenderWindow &window);
-    void flocking(vector<Boid> &boids);
+    void flocking();
 };

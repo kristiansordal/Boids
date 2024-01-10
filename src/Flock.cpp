@@ -8,21 +8,15 @@ void Flock::add_boid(Vector2f position, float angle) {
 void Flock::draw(RenderWindow &window) {
     for (auto &boid : boids) {
         window.draw(boid.triangle);
-        window.draw(boid.view_line);
     }
 }
 void Flock::update(RenderWindow &window) {
-    for (auto &boid : boids) {
-        boid.constrain();
-        boid.update(1.f / 60.f);
-    }
+    flocking();
     draw(window);
 }
 
-void Flock::flocking(vector<Boid> &boids) {
+void Flock::flocking() {
     for (auto &boid : boids) {
-        boid.cohesion(boids);
-        // boid.alignment(boids);
-        // boid.separation(boids);
+        boid.run(boids);
     }
 }

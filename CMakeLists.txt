@@ -18,6 +18,8 @@ add_executable(boids
     src/Boid.cpp
     src/Flock.hpp
     src/Flock.cpp
+    src/Util.hpp
+    src/Util.cpp
     src/main.cpp
 )
 

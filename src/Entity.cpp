@@ -1,5 +1,6 @@
 #include "Entity.hpp"
 #define _USE_MATH_DEFINES
+#include "Util.hpp"
 #include <cmath>
 
 void Entity::spawn(Vector2f point, float angle) {
@@ -33,16 +34,51 @@ void Entity::compute_direction() {
 }
 
 void Entity::constrain() {
-    auto view_range = view_line[1].position;
+    // Screen dimensions
+    const float screen_width = 800.0f;
+    const float screen_height = 600.0f;
 
-    if (view_range.x > 800 || view_range.x < 0 || view_range.y > 600 || view_range.y < 0) {
-        triangle.rotate(1.f);
+    sf::Vector2f position = triangle.getPosition();
+
+    // Wrap around horizontally
+    if (position.x > screen_width) {
+        position.x = 0;
+    } else if (position.x < 0) {
+        position.x = screen_width;
     }
+
+    // Wrap around vertically
+    if (position.y > screen_height) {
+        position.y = 0;
+    } else if (position.y < 0) {
+        position.y = screen_height;
+    }
+
+    triangle.setPosition(position);
 }
 
-void Entity::update(float dt) {
+Vector2f Entity::target(Vector2f &target) {
+    auto pos = triangle.getOrigin();
+    auto d = distance(pos, target);
+    auto desired_velocity = (target - pos) / (d * max_speed_);
+    auto steering = desired_velocity - velocity_;
+    return steering;
+}
+
+void Entity::update_entity(float dt) {
     compute_direction();
     compute_view_line();
-    velocity_ = direction_ * speed_;
-    triangle.move(velocity_ * dt);
+
+    auto aligned_acceleration = direction_ * magnitude(acceleration_);
+    velocity_ += aligned_acceleration * dt;
+
+    speed_ = magnitude(velocity_);
+
+    if (speed_ > max_speed_) {
+        velocity_ = normalize(velocity_) * max_speed_;
+        speed_ = max_speed_;
+    }
+
+    auto pos = triangle.getPosition() + velocity_ * dt;
+    triangle.setPosition(pos);
 }

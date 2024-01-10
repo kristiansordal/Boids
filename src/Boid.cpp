@@ -1,8 +1,8 @@
 #include "Boid.hpp"
+#include "Util.hpp"
+#include <iostream>
 using namespace std;
 using namespace sf;
-
-float distance(Vector2f a, Vector2f b) { return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2)); }
 
 void Entity::set_color(Color color) {
     triangle.setFillColor(color);
@@ -15,8 +15,8 @@ void Entity::set_color(Color color) {
 // void Boid::separation(vector<Boid> &boids) { return; }
 // void Boid::alignment(vector<Boid> &boids) { return; }
 
-void Boid::cohesion(vector<Boid> &boids) {
-    float range = 50.f;
+Vector2f Boid::cohesion(vector<Boid> &boids) {
+    float range = 500.f;
     float in_range = 0;
     Vector2f center_of_mass(0.f, 0.f);
 
@@ -32,20 +32,18 @@ void Boid::cohesion(vector<Boid> &boids) {
 
     if (in_range > 0) {
         center_of_mass /= in_range;
+        return target(center_of_mass);
     } else {
-        return;
+        return Vector2f(0.f, 0.f);
     }
-
-    // Vector2f desired_velocity = center_of_mass - triangle.getPosition();
-    // return;
 }
 void Boid::flock(vector<Boid> &boids) {
-    cohesion(boids);
-    // alignment(boids);
-    // separation(boids);
+    [[maybe_unused]] auto steering = cohesion(boids);
+    set_acceleration(steering);
 }
 
 void Boid::run(vector<Boid> &boids) {
     flock(boids);
-    update(1.f / 60.f);
+    update_entity(1.f / 60.f);
+    constrain();
 }
