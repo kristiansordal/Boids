@@ -24,7 +24,7 @@ int main() {
     uniform_real_distribution<float> distribution_angle(0.0, 360.0);
 
     Flock flock;
-    for (int i = 0; i < 200; i++) {
+    for (int i = 0; i < 1000; i++) {
         auto x = distribution_width(generator);
         auto y = distribution_height(generator);
         auto angle = distribution_angle(generator);

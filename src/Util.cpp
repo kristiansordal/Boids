@@ -8,4 +8,9 @@ void limit(Vector2f &v, float max) {
         v.y /= mag;
     }
 }
-Vector2f normalize(Vector2f v) { return v / magnitude(v); }
+void normalize(Vector2f &v) {
+    auto mag = magnitude(v);
+    if (mag > 0) {
+        v = v / magnitude(v);
+    }
+}

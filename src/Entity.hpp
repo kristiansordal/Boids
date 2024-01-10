@@ -11,8 +11,8 @@ class Entity {
     float base_ = 10.f;
     float height_ = 15.f;
     float speed_ = 0.f;
-    float max_speed_ = 35.f;
-    float max_force_ = 5.f;
+    float max_speed_ = 3.5f * 2;
+    float max_force_ = .5f;
     int rotation_ = NO_ROT;
     Vector2f acceleration_;
     Vector2f velocity_;
@@ -21,8 +21,7 @@ class Entity {
   public:
     ConvexShape triangle;
     Entity(Vector2f point, float angle)
-        : acceleration_(0.01f, 0.01f),
-          velocity_(rand() % 3 - 2, rand() % 3 - 2) {
+        : velocity_(rand() % -10 - 2, rand() % 10 - 2) {
         spawn(point, angle);
     }
 
@@ -45,5 +44,5 @@ class Entity {
     void apply_force(Vector2f force) { acceleration_ += force; }
     Vector2f target(Vector2f &target);
     void constrain();
-    void update_entity(float dt);
+    void update_entity();
 };

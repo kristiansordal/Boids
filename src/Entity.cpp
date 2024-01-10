@@ -38,22 +38,28 @@ void Entity::constrain() {
 }
 
 Vector2f Entity::target(Vector2f &target) {
-    auto desired = normalize(-target) * max_speed_;
+    normalize(target);
+    auto desired = -target * max_speed_;
     acceleration_ = desired - velocity_;
     limit(acceleration_, max_force_);
     return acceleration_;
 }
 
-void Entity::update_entity(float dt) {
-    velocity_ += acceleration_ * dt;
+void Entity::update_entity() {
+    velocity_ += acceleration_ * 0.2f;
     speed_ = magnitude(velocity_);
-    limit(velocity_, max_speed_);
+
+    if (speed_ > max_speed_) {
+        normalize(velocity_);
+        velocity_ *= max_speed_;
+    }
 
     // Rotate triangle to face in the direction of the velocity
     float angle = std::atan2(velocity_.y, velocity_.x);
     triangle.setRotation((angle * 180.f / M_PI) + 90.f);
 
     // Update position of triangle
-    auto pos = triangle.getPosition() + velocity_ * dt;
+    auto pos = triangle.getPosition() + velocity_;
     triangle.setPosition(pos);
+    acceleration_ *= 0.f;
 }

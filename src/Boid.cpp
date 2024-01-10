@@ -20,13 +20,22 @@ Vector2f Boid::separation(vector<Boid> &boids) {
         auto d = distance(pos, b_pos);
 
         if (d < range && d > 0.f) {
-            steer += normalize(pos - b_pos) / d;
+            // steer = pos - b_pos;
+            // steer += normalize(pos - b_pos) / d;
+            auto diff = pos - b_pos;
+            normalize(diff);
+            steer += (diff /= d);
             in_range++;
         }
     }
 
     if (in_range > 0) {
-        steer = normalize(steer) * get_max_speed() + get_velocity();
+        steer /= in_range;
+    }
+
+    if (magnitude(steer) > 0.f) {
+        normalize(steer);
+        steer = (steer * get_max_speed()) - get_velocity();
         limit(steer, get_max_force());
     }
 
@@ -49,10 +58,12 @@ Vector2f Boid::alignment(vector<Boid> &boids) {
     }
 
     if (in_range > 0) {
-        avg_velocity = normalize(avg_velocity / in_range) * get_max_speed();
-        avg_velocity -= get_velocity();
-        limit(avg_velocity, get_max_force());
-        return avg_velocity;
+        avg_velocity /= in_range;
+        normalize(avg_velocity);
+        avg_velocity *= get_max_speed();
+        auto steer = avg_velocity - get_velocity();
+        limit(steer, get_max_force());
+        return steer;
     }
 
     return Vector2f(0.f, 0.f);
@@ -77,20 +88,20 @@ Vector2f Boid::cohesion(vector<Boid> &boids) {
         center_of_mass /= in_range;
         return target(center_of_mass);
     } else {
-        return Vector2f(1.f, 1.f);
+        return Vector2f(0.f, 0.f);
     }
 }
 void Boid::flock(vector<Boid> &boids) {
     [[maybe_unused]] auto cohesion_force = cohesion(boids) * 1.5f;
     [[maybe_unused]] auto separation_force = separation(boids) * 1.f;
     [[maybe_unused]] auto alignment_force = alignment(boids) * 1.f;
-    apply_force(cohesion_force);
     apply_force(separation_force);
     apply_force(alignment_force);
+    apply_force(cohesion_force);
 }
 
 void Boid::run(vector<Boid> &boids) {
-    constrain();
     flock(boids);
-    update_entity(1.f / 60.f);
+    update_entity();
+    constrain();
 }
