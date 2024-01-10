@@ -1,23 +1,28 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#define CCW 1
+#define NO_ROT 0
+#define CW -1
+#define SCREEN_WIDTH 2560.0f
+#define SCREEN_HEIGHT 1440.0f
 using namespace sf;
 class Entity {
   private:
     float base_ = 10.f;
     float height_ = 15.f;
     float speed_ = 0.f;
-    float max_speed_ = 5.f;
-    float force_ = 3.f;
+    float max_speed_ = 35.f;
+    float max_force_ = 5.f;
+    int rotation_ = NO_ROT;
     Vector2f acceleration_;
     Vector2f velocity_;
     Vector2f direction_;
 
   public:
     ConvexShape triangle;
-    VertexArray view_line;
     Entity(Vector2f point, float angle)
         : acceleration_(0.01f, 0.01f),
-          velocity_(0, 0) {
+          velocity_(rand() % 3 - 2, rand() % 3 - 2) {
         spawn(point, angle);
     }
 
@@ -25,14 +30,18 @@ class Entity {
 
     // Getters
     Vector2f get_acceleration() { return acceleration_; }
+    Vector2f get_velocity() { return velocity_; }
+    float get_max_speed() { return max_speed_; }
+    float get_max_force() { return max_force_; }
 
     // Setters
     void set_acceleration(Vector2f acceleration) { acceleration_ = acceleration; }
+    void set_velocity(Vector2f velocity) { velocity_ = velocity; }
+    void set_max_speed(float max_speed) { max_speed_ = max_speed; }
+    void set_max_force(float max_force) { max_force_ = max_force; }
 
     virtual void set_color(Color color);
     void spawn(Vector2f point, float angle);
-    void compute_view_line();
-    void compute_direction();
     void apply_force(Vector2f force) { acceleration_ += force; }
     Vector2f target(Vector2f &target);
     void constrain();

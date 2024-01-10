@@ -8,9 +8,9 @@ class Boid : public Entity {
 
     virtual ~Boid() = default;
 
-    // void separation(vector<Boid> &boids);
+    Vector2f separation(vector<Boid> &boids);
     Vector2f cohesion(vector<Boid> &boids);
-    // void alignment(vector<Boid> &boids);
+    Vector2f alignment(vector<Boid> &boids);
     void run(vector<Boid> &boids);
     void flock(vector<Boid> &boids);
 
