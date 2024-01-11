@@ -2,7 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <chrono>
-#include <iostream>
 #include <random>
 using namespace sf;
 
@@ -11,12 +10,10 @@ int main() {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     auto window_height = desktop.height;
     auto window_width = desktop.width;
-    std::cout << "W: " << window_width << ", H: " << window_height << std::endl;
     window.create(sf::VideoMode(window_width, window_height, desktop.bitsPerPixel), "Boids", sf::Style::None);
-
     window.setFramerateLimit(60);
-    Clock dt_clock, fps;
 
+    // Randomize the position and angle of each boid
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
     mt19937 generator(seed); // Mersenne Twister engine
     uniform_real_distribution<float> distribution_width(0.0, (float)window_width);
@@ -41,6 +38,8 @@ int main() {
                 window.close();
             }
         }
+
+        // Continuously update the simulation
         window.clear(Color::White);
         flock.update(window);
         window.display();

@@ -1,6 +1,6 @@
 # Boids Simulation
 
-This repository will attempt to create a simulation of Boids using the SFML library for C++.
+This is an implementation of a boids simulation in C++ using the SFML library.
 
 ## Try it yourself!
 
@@ -14,6 +14,5 @@ build/debug/boids
 
 ## TODO
 - ✅ Implement proper movement of multiple boids without rules
-- ❌ Implement cohesion, alignment and separation
+- ✅ Implement cohesion, alignment and separation
 - ❌ Implement predators
-

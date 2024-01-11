@@ -3,6 +3,12 @@
 #include "Util.hpp"
 #include <cmath>
 
+/**
+ * Spawns in an entity at a given point and a given rotation
+ *
+ * @param point The point at which to spawn the entity.
+ * @param angle The angle at which to spawn the entity.
+ */
 void Entity::spawn(Vector2f point, float angle) {
     // Sets the triangle to an isosceles triangle starting at the pase point
     triangle.setPointCount(3);
@@ -16,6 +22,9 @@ void Entity::spawn(Vector2f point, float angle) {
     triangle.setPosition(point);
 }
 
+/**
+ * Wraps the entity around the screen.
+ */
 void Entity::constrain() {
     // Wrap around the screen
     sf::Vector2f position = triangle.getPosition();
@@ -37,22 +46,13 @@ void Entity::constrain() {
     triangle.setPosition(position);
 }
 
-Vector2f Entity::target(Vector2f &target) {
-    normalize(target);
-    auto desired = -target * max_speed_;
-    acceleration_ = desired - velocity_;
-    limit(acceleration_, max_force_);
-    return acceleration_;
-}
-
+/**
+ * Updates the entity's position, rotation and velocity
+ */
 void Entity::update_entity() {
+    // Acceleration is scaled to smoothen movement
     velocity_ += acceleration_ * 0.2f;
-    speed_ = magnitude(velocity_);
-
-    if (speed_ > max_speed_) {
-        normalize(velocity_);
-        velocity_ *= max_speed_;
-    }
+    limit(velocity_, max_speed_);
 
     // Rotate triangle to face in the direction of the velocity
     float angle = std::atan2(velocity_.y, velocity_.x);

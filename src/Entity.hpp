@@ -1,8 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#define CCW 1
-#define NO_ROT 0
-#define CW -1
 #define SCREEN_WIDTH 2560.0f
 #define SCREEN_HEIGHT 1440.0f
 using namespace sf;
@@ -11,9 +8,8 @@ class Entity {
     float base_ = 10.f;
     float height_ = 15.f;
     float speed_ = 0.f;
-    float max_speed_ = 3.5f * 2;
-    float max_force_ = .5f;
-    int rotation_ = NO_ROT;
+    float max_speed_ = 7.f;
+    float max_force_ = 2.f;
     Vector2f acceleration_;
     Vector2f velocity_;
     Vector2f direction_;
@@ -21,7 +17,7 @@ class Entity {
   public:
     ConvexShape triangle;
     Entity(Vector2f point, float angle)
-        : velocity_(rand() % -10 - 2, rand() % 10 - 2) {
+        : velocity_(rand() % 3 - 2, rand() % 3 - 2) {
         spawn(point, angle);
     }
 
@@ -42,7 +38,6 @@ class Entity {
     virtual void set_color(Color color);
     void spawn(Vector2f point, float angle);
     void apply_force(Vector2f force) { acceleration_ += force; }
-    Vector2f target(Vector2f &target);
     void constrain();
     void update_entity();
 };
