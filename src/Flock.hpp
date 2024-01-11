@@ -14,5 +14,7 @@ class Flock {
     void draw(RenderWindow &window);
     void update(RenderWindow &window);
     void set_new_color(int id, Color color);
+    Boid &get_boid(int id);
+    int size() { return boids.size(); }
     void flocking();
 };

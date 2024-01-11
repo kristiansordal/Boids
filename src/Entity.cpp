@@ -1,6 +1,6 @@
 #include "Entity.hpp"
-#define _USE_MATH_DEFINES
 #include "Util.hpp"
+#define _USE_MATH_DEFINES
 #include <cmath>
 
 /**

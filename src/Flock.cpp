@@ -41,6 +41,7 @@ void Flock::update(RenderWindow &window) {
  */
 void Flock::set_new_color(int id, Color color) { boids[id].set_color(color); }
 
+Boid &Flock::get_boid(int id) { return boids[id]; }
 /**
  * Applies flocking behavior to each boid in the flock.
  * This function iterates through each boid and calls its run method,

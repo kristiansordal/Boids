@@ -1,6 +1,5 @@
 #include "Boid.hpp"
 #include "Util.hpp"
-using namespace std;
 using namespace sf;
 
 /**

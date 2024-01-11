@@ -15,13 +15,13 @@ int main() {
 
     // Randomize the position and angle of each boid
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-    mt19937 generator(seed); // Mersenne Twister engine
+    mt19937 generator(seed);
     uniform_real_distribution<float> distribution_width(0.0, (float)window_width);
     uniform_real_distribution<float> distribution_height(0.0, (float)window_height);
     uniform_real_distribution<float> distribution_angle(0.0, 360.0);
 
     Flock flock;
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 250; i++) {
         auto x = distribution_width(generator);
         auto y = distribution_height(generator);
         auto angle = distribution_angle(generator);
@@ -38,6 +38,12 @@ int main() {
             }
             if ((event.type == Event::KeyPressed) && (event.key.code == Keyboard::Escape)) {
                 window.close();
+            }
+            // Handle mouse button pressed event
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                Vector2f mouse_pos = static_cast<Vector2f>(Mouse::getPosition(window));
+                auto angle = distribution_angle(generator);
+                flock.add_boid(mouse_pos, angle);
             }
         }
 
