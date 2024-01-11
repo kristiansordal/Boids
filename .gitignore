@@ -4,6 +4,7 @@
 *.lo
 *.o
 *.obj
+/src/.cache
 
 # Precompiled Headers
 *.gch
