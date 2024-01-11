@@ -37,6 +37,11 @@ void Flock::update(RenderWindow &window) {
 }
 
 /**
+ * Set a new color for a specific boid in the flock, for easier tracking
+ */
+void Flock::set_new_color(int id, Color color) { boids[id].set_color(color); }
+
+/**
  * Applies flocking behavior to each boid in the flock.
  * This function iterates through each boid and calls its run method,
  * which includes behaviors like separation, alignment, and cohesion.

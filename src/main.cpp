@@ -28,6 +28,8 @@ int main() {
         flock.add_boid(Vector2f(x, y), angle);
     }
 
+    flock.set_new_color(0, Color::Red);
+
     while (window.isOpen()) {
         Event event;
         while (window.pollEvent(event)) {

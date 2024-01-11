@@ -13,5 +13,6 @@ class Flock {
     void add_boid(Vector2f position, float angle);
     void draw(RenderWindow &window);
     void update(RenderWindow &window);
+    void set_new_color(int id, Color color);
     void flocking();
 };
