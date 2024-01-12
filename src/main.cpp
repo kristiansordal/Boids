@@ -19,9 +19,10 @@ int main() {
     uniform_real_distribution<float> distribution_width(0.0, (float)window_width);
     uniform_real_distribution<float> distribution_height(0.0, (float)window_height);
     uniform_real_distribution<float> distribution_angle(0.0, 360.0);
+    auto bg = Color(52, 49, 48);
 
     Flock flock;
-    for (int i = 0; i < 250; i++) {
+    for (int i = 0; i < 500; i++) {
         auto x = distribution_width(generator);
         auto y = distribution_height(generator);
         auto angle = distribution_angle(generator);
@@ -48,7 +49,7 @@ int main() {
         }
 
         // Continuously update the simulation
-        window.clear(Color::White);
+        window.clear(bg);
         flock.update(window);
         window.display();
     }

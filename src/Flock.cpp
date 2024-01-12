@@ -8,7 +8,7 @@
  */
 void Flock::add_boid(Vector2f position, float angle) {
     auto boid = Boid(position, angle);
-    boid.set_color(Color::Green);
+    boid.set_color(Color(175, 180, 52));
     boids.push_back(boid);
 }
 

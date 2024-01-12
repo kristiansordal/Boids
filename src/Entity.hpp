@@ -9,7 +9,7 @@ class Entity {
     float height_ = 15.f;
     float speed_ = 0.f;
     float max_speed_ = 7.f;
-    float max_force_ = 2.f;
+    float max_force_ = 1.5f;
     Vector2f acceleration_;
     Vector2f velocity_;
     Vector2f direction_;

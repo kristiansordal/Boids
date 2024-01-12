@@ -1,5 +1,6 @@
 #include "Boid.hpp"
 #include "Util.hpp"
+#include <omp.h>
 using namespace sf;
 
 /**
@@ -10,7 +11,7 @@ using namespace sf;
 void Entity::set_color(Color color) {
     triangle.setFillColor(color);
     triangle.setOutlineThickness(1.f);
-    triangle.setOutlineColor(Color::Black);
+    triangle.setOutlineColor(Color(229, 216, 172));
 }
 
 /**
