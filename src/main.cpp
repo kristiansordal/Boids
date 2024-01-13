@@ -8,8 +8,8 @@ using namespace sf;
 int main() {
     RenderWindow window;
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-    auto window_height = desktop.height;
-    auto window_width = desktop.width;
+    auto window_height = 800;
+    auto window_width = 800;
     window.create(sf::VideoMode(window_width, window_height, desktop.bitsPerPixel), "Boids", sf::Style::None);
     window.setFramerateLimit(60);
 
@@ -28,8 +28,6 @@ int main() {
         auto angle = distribution_angle(generator);
         flock.add_boid(Vector2f(x, y), angle);
     }
-
-    flock.set_new_color(0, Color::Red);
 
     while (window.isOpen()) {
         Event event;

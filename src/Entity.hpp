@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#define SCREEN_WIDTH 2560.0f
-#define SCREEN_HEIGHT 1440.0f
+#define SCREEN_WIDTH 800.0f
+#define SCREEN_HEIGHT 800.0f
 using namespace sf;
 class Entity {
   private:

@@ -2,14 +2,16 @@
 
 This is an implementation of a boids simulation in C++ using the SFML library.
 
+
+
 ## Try it yourself!
 
 ```
 git clone https://github.com/kristiansordal/Boids
 cd Boids
-cmake -B build/debug
-cmake --build build/debug
-build/debug/boids
+cmake -B build
+cmake --build build
+build/boids
 ```
 
 ## TODO
