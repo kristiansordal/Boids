@@ -3,6 +3,7 @@
 This is an implementation of a boids simulation in C++ using the SFML library.
 
 
+![boids-gif](https://github.com/kristiansordal/Boids/blob/main/images/boids.gif)
 
 ## Try it yourself!
 
